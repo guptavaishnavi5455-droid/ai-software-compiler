@@ -1,0 +1,23 @@
+# Railway Backend Configuration
+# This file configures the FastAPI backend deployment on Railway
+
+[build]
+builder = "dockerfile"
+dockerfile = "Dockerfile"
+
+[env]
+PORT = 8000
+
+[[services]]
+type = "web"
+name = "crm-api"
+startCommand = "python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health"
+healthcheckInterval = 30
+
+# Environment variables required by the backend
+# Add these in Railway dashboard or via CLI:
+# railway link
+# railway env add DATABASE_URL postgresql://...
+# railway env add SECRET_KEY your-secret-key
+# railway env add STRIPE_SECRET_KEY sk_test_...
